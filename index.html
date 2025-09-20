@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SiBAKAR — Dashboard Monitoring Kebakaran</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <!-- banner api -->
+  <div id="fireBanner" class="banner">🔥 API TERDETEKSI! 🔥</div>
+
+  <header>
+    <h1>🔥 SiBAKAR</h1>
+    <p>Dashboard Monitoring Kebakaran Rumah & Industri Skala Kecil</p>
+  </header>
+
+  <main>
+    <section class="dashboard">
+      <h2>Monitoring Sensor</h2>
+
+      <div class="card-row">
+        <div class="sensor-card suhu">
+          <h3>Suhu</h3>
+          <div class="value" id="temperature">-- °C</div>
+          <canvas id="tempChart" class="mini-chart"></canvas>
+          <div class="insight" id="insight-temp">Insight suhu: --</div>
+        </div>
+
+        <div class="sensor-card mq2">
+          <h3>MQ2 (Gas)</h3>
+          <div class="value" id="mq2">-- ppm</div>
+          <canvas id="mq2Chart" class="mini-chart"></canvas>
+          <div class="insight" id="insight-mq2">Insight MQ2: --</div>
+        </div>
+
+        <div class="sensor-card mq7">
+          <h3>MQ7 (CO)</h3>
+          <div class="value" id="mq7">-- ppm</div>
+          <canvas id="mq7Chart" class="mini-chart"></canvas>
+          <div class="insight" id="insight-mq7">Insight MQ7: --</div>
+        </div>
+
+        <div class="sensor-card api">
+          <h3>Api</h3>
+          <div class="value" id="apiStatus">--</div>
+        </div>
+      </div>
+
+      <div class="log-section">
+        <h3>📋 Log & Export</h3>
+        <button id="exportBtn">Export ke Excel</button>
+        <table id="logTable">
+          <thead>
+            <tr>
+              <th>Hari</th><th>Tanggal</th><th>Waktu</th>
+              <th>Suhu</th><th>MQ2</th><th>MQ7</th><th>Api</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

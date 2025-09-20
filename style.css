@@ -1,0 +1,85 @@
+/* reset & font */
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  color: #ecf0f1;
+}
+
+/* background gradient */
+body {
+  background: linear-gradient(135deg, #1a1a1a 0%, #330000 70%);
+  min-height: 100vh;
+  background-attachment: fixed;
+}
+
+/* banner api */
+.banner {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0;
+  background: #e74c3c; color: #fff;
+  text-align: center; padding: 1rem; font-size: 1.2rem;
+  z-index: 100; animation: flash 1s infinite;
+}
+.banner.show { display: block; }
+@keyframes flash {
+  0%,100% { opacity:1 } 50% { opacity:0.5 }
+}
+
+/* header */
+header {
+  text-align: center; padding: 2rem 1rem;
+  background: rgba(0,0,0,0.4); box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+header h1 {
+  font-size: 2rem; color: #ffca28;
+  text-shadow: 0 0 8px #ff5722; margin-bottom: 0.5rem;
+}
+header p { color: #ddd; }
+
+/* grid kartu */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 1rem; padding: 1rem;
+}
+
+/* kartu sensor */
+.sensor-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 0.5rem; padding: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px); text-align: center;
+}
+.sensor-card h3 {
+  margin-bottom: 0.5rem; color: #ffd54f;
+}
+.sensor-card .value {
+  font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;
+}
+.sensor-card .mini-chart { height: 60px !important; }
+.sensor-card .insight {
+  font-size: 0.85rem; color: #ccc; margin-top: 0.5rem;
+}
+
+/* kartu api */
+.sensor-card.api { background: rgba(255,87,34,0.2); }
+.sensor-card.api .value { color: #fff; }
+
+/* log & export */
+.log-section { padding: 1rem; }
+.log-section button {
+  padding: 0.5rem 1rem; background: #ff5722;
+  border: none; border-radius: 0.25rem;
+  color: #fff; cursor: pointer; margin-bottom: 0.5rem;
+  transition: background .3s;
+}
+.log-section button:hover { background: #e64a19; }
+.log-section table {
+  width:100%; border-collapse: collapse;
+  background: rgba(0,0,0,0.4);
+}
+.log-section th, .log-section td {
+  border:1px solid #444; padding:0.5rem;
+  text-align:center;
+}
+.log-section th { background: rgba(0,0,0,0.6); }
