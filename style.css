@@ -1,3 +1,42 @@
+/* Bungkus header agar anak-anak absolute berada relatif terhadap header */
+header {
+  position: relative;
+  padding: 40px 20px 20px; /* tambahkan top padding agar konten tidak tertutup logo */
+  text-align: center;
+  background-color: #fff;    /* opsional: sesuaikan latar */
+}
+
+/* Styling logo Polindra */
+#logo-polindra {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 100px;              /* sesuaikan ukuran */
+  width: auto;
+}
+
+/* Styling logo SiBAKAR */
+#logo-polindra {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 100px;              /* sesuaikan ukuran */
+  width: auto;
+}
+
+
+/* Styling teks header */
+.header-content h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.header-content p {
+  margin: 8px 0 0;
+  font-size: 1rem;
+  color: #555;
+}
+
 /* reset & font */
 * {
   margin: 0; padding: 0; box-sizing: border-box;
