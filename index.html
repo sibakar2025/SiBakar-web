@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>SiBAKAR — Dashboard Monitoring Kebakaran</title>
+  <title>SiBAKAR — Sistem Pendeteksi dan Penanganan Kebakaran Untuk Rumah dan Industri Skala Kecil</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
@@ -17,19 +17,16 @@
   <header>
     <h1>🔥 SiBAKAR</h1>
     <p>Dashboard Monitoring Kebakaran Rumah & Industri Skala Kecil</p>
-  <img
-    id="logo-polindra"
-    src="file/polindra.png"
-    alt="Logo Polindra"
-  
-    id="logo-sibakar"
-    src="file/sibakar.jpg"
-    alt="Logo SiBAKAR"
-  />
+<header>
+  <img id="logo-polindra" src="file/polindra.png" alt="Logo Polindra">
+  <img id="logo-sibakar" src="file/sibakar.jpg" alt="Logo SiBAKAR">
+  <img id="logo-elektro" src="file/elektro.png" alt="Logo Elektro">
+  <div class="header-content">
+  </div>
 
   <main>
     <section class="dashboard">
-      <h2>Monitoring Sensor</h2>
+      <h2>Data Sensor</h2>
 
       <div class="card-row">
         <div class="sensor-card suhu">
@@ -40,21 +37,21 @@
         </div>
 
         <div class="sensor-card mq2">
-          <h3>MQ2 (Gas)</h3>
+          <h3>MQ2 (Gas Bahaya)</h3>
           <div class="value" id="mq2">-- ppm</div>
           <canvas id="mq2Chart" class="mini-chart"></canvas>
           <div class="insight" id="insight-mq2">Insight MQ2: --</div>
         </div>
 
         <div class="sensor-card mq7">
-          <h3>MQ7 (CO)</h3>
+          <h3>MQ7 (Gas CO)</h3>
           <div class="value" id="mq7">-- ppm</div>
           <canvas id="mq7Chart" class="mini-chart"></canvas>
           <div class="insight" id="insight-mq7">Insight MQ7: --</div>
         </div>
 
         <div class="sensor-card api">
-          <h3>Api</h3>
+          <h3>Status Api</h3>
           <div class="value" id="apiStatus">--</div>
         </div>
       </div>

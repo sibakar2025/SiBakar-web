@@ -9,17 +9,25 @@ header {
 /* Styling logo Polindra */
 #logo-polindra {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 0px;
+  left: 0px;
   height: 100px;              /* sesuaikan ukuran */
   width: auto;
 }
 
 /* Styling logo SiBAKAR */
-#logo-polindra {
+#logo-sibakar {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 0px;
+  left: 120px;
+  height: 100px;              /* sesuaikan ukuran */
+  width: auto;
+}
+/* Styling logo SiBAKAR */
+#logo-elektro {
+  position: absolute;
+  top: 0px;
+  left: 230px;
   height: 100px;              /* sesuaikan ukuran */
   width: auto;
 }
