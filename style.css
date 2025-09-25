@@ -1,39 +1,37 @@
-/* Bungkus header agar anak-anak absolute berada relatif terhadap header */
+
 header {
   position: relative;
-  padding: 40px 20px 20px; /* tambahkan top padding agar konten tidak tertutup logo */
+  padding: 120px 50px 50px; 
   text-align: center;
-  background-color: #fff;    /* opsional: sesuaikan latar */
-}
+  background-color: #fff;    
 
-/* Styling logo Polindra */
 #logo-polindra {
   position: absolute;
-  top: 0px;
+  top: 30px;
   left: 0px;
-  height: 100px;              /* sesuaikan ukuran */
+  height: 80px;             
   width: auto;
 }
 
-/* Styling logo SiBAKAR */
-#logo-sibakar {
+
+#logo-sibakar2 {
   position: absolute;
-  top: 0px;
-  left: 120px;
-  height: 100px;              /* sesuaikan ukuran */
+  top: 30px;
+  left: 100px;
+  height: 80px;            
   width: auto;
 }
-/* Styling logo SiBAKAR */
+
 #logo-elektro {
   position: absolute;
-  top: 0px;
-  left: 230px;
-  height: 100px;              /* sesuaikan ukuran */
+  top: 30px;
+  left: 200px;
+  height: 80px;             
   width: auto;
+}
 }
 
 
-/* Styling teks header */
 .header-content h1 {
   margin: 0;
   font-size: 2rem;
@@ -45,21 +43,19 @@ header {
   color: #555;
 }
 
-/* reset & font */
 * {
   margin: 0; padding: 0; box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
   color: #ecf0f1;
 }
 
-/* background gradient */
+
 body {
   background: linear-gradient(135deg, #1a1a1a 0%, #330000 70%);
   min-height: 100vh;
   background-attachment: fixed;
 }
 
-/* banner api */
 .banner {
   display: none;
   position: fixed; top: 0; left: 0; right: 0;
@@ -72,7 +68,7 @@ body {
   0%,100% { opacity:1 } 50% { opacity:0.5 }
 }
 
-/* header */
+
 header {
   text-align: center; padding: 2rem 1rem;
   background: rgba(0,0,0,0.4); box-shadow: 0 4px 12px rgba(0,0,0,0.5);
@@ -83,14 +79,13 @@ header h1 {
 }
 header p { color: #ddd; }
 
-/* grid kartu */
 .card-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
   gap: 1rem; padding: 1rem;
 }
 
-/* kartu sensor */
+
 .sensor-card {
   background: rgba(255,255,255,0.05);
   border-radius: 0.5rem; padding: 1rem;
@@ -108,11 +103,9 @@ header p { color: #ddd; }
   font-size: 0.85rem; color: #ccc; margin-top: 0.5rem;
 }
 
-/* kartu api */
 .sensor-card.api { background: rgba(255,87,34,0.2); }
 .sensor-card.api .value { color: #fff; }
 
-/* log & export */
 .log-section { padding: 1rem; }
 .log-section button {
   padding: 0.5rem 1rem; background: #ff5722;
