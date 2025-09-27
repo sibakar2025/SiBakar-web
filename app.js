@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
-// inisialisasi Firebase
+// konfigurasi Firebase — sesuaikan bila perlu (hapus trailing slash)
 const firebaseConfig = {
   apiKey: "AIzaSyCpBVzHfQRENwdlF9LkVwAGq0_uXiZs-aA",
   databaseURL: "https://sibakar-2bf33-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -9,7 +9,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db  = getDatabase(app);
 
-// DOM
+// DOM references
 const tempEl   = document.getElementById("temperature");
 const mq2El    = document.getElementById("mq2");
 const mq7El    = document.getElementById("mq7");
@@ -19,7 +19,7 @@ const exportBtn= document.getElementById("exportBtn");
 const banner   = document.getElementById("fireBanner");
 const apiCard  = document.querySelector(".sensor-card.api");
 
-// Chart helper
+// Chart setup (same as sebelumnya)
 function makeChart(ctx, color) {
   return new Chart(ctx, {
     type: "line",
@@ -31,7 +31,7 @@ const tempChart = makeChart(document.getElementById("tempChart"), "#e53935");
 const mq2Chart  = makeChart(document.getElementById("mq2Chart"),  "#fb8c00");
 const mq7Chart  = makeChart(document.getElementById("mq7Chart"),  "#1e88e5");
 
-// history arrays limited
+// small history and insight helper
 const history = { suhu:[], mq2:[], mq7:[] };
 function genInsight(arr,label,th) {
   if(arr.length<2) return "Belum cukup data";
@@ -41,7 +41,6 @@ function genInsight(arr,label,th) {
   return `${label} ${trend} (${d}), ${status}`;
 }
 
-// notifikasi
 if("Notification" in window) Notification.requestPermission();
 function notifyFire(){
   if(Notification.permission==="granted"){
@@ -49,34 +48,48 @@ function notifyFire(){
   }
 }
 
-// utility: parse incoming record into uniform shape
-function normalizeRecord(obj, defaultTs) {
-  // possible keys: temperature, mq2, mq7, api, ts OR Suhu, MQ2, MQ7, Api
+// normalize incoming object to {temperature,mq2,mq7,api,ts}
+function normalizeRecord(obj, fallbackTs = Date.now()) {
   const rec = {};
-  rec.temperature = (obj.temperature ?? obj.Suhu ?? obj.Temperature ?? obj.suhu ?? null);
-  rec.mq2 = (obj.mq2 ?? obj.MQ2 ?? obj.MQ_2 ?? null);
-  rec.mq7 = (obj.mq7 ?? obj.MQ7 ?? obj.MQ_7 ?? null);
-  rec.api  = (obj.api ?? obj.Api ?? obj.fire ?? obj.ApiTerdeteksi ?? false);
-  rec.ts   = (obj.ts ?? obj.timestamp ?? obj.createdAt ?? defaultTs ?? Date.now());
+  rec.temperature = obj.temperature ?? obj.Suhu ?? obj.Temperature ?? obj.suhu ?? null;
+  rec.mq2 = obj.mq2 ?? obj.MQ2 ?? obj.MQ_2 ?? null;
+  rec.mq7 = obj.mq7 ?? obj.MQ7 ?? obj.MQ_7 ?? null;
+  rec.api  = obj.api ?? obj.Api ?? obj.fire ?? obj.ApiTerdeteksi ?? false;
+  rec.ts   = Number(obj.ts ?? obj.timestamp ?? obj.createdAt ?? fallbackTs);
   return rec;
 }
 
-// render a single entry into table row
-function makeRow(entry) {
-  const d = new Date(Number(entry.ts));
-  const hari = d.toLocaleDateString("id-ID",{weekday:"long"});
-  const tanggal = d.toLocaleDateString("id-ID");
-  const waktu = d.toLocaleTimeString("id-ID");
-  return `<tr>
-    <td>${hari}</td><td>${tanggal}</td><td>${waktu}</td>
-    <td>${(entry.temperature==null)?"--":Number(entry.temperature).toFixed(1)}</td>
-    <td>${(entry.mq2==null)?"--":Number(entry.mq2).toFixed(1)}</td>
-    <td>${(entry.mq7==null)?"--":Number(entry.mq7).toFixed(1)}</td>
-    <td>${entry.api ? "API" : "AMAN"}</td>
-  </tr>`;
+// storage: Map keyed by unique id to avoid duplicate rows
+const entries = new Map();
+
+function addOrUpdateEntry(id, rec) {
+  entries.set(String(id), rec);
 }
 
-// update charts and UI from last entry
+// rebuild table and update UI from latest entry
+function rebuildUI() {
+  const all = Array.from(entries.values()).sort((a,b) => a.ts - b.ts);
+  // rebuild table
+  logTable.innerHTML = "";
+  for (const r of all) {
+    const d = new Date(Number(r.ts));
+    const hari = d.toLocaleDateString("id-ID",{weekday:"long"});
+    const tanggal = d.toLocaleDateString("id-ID");
+    const waktu = d.toLocaleTimeString("id-ID");
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${hari}</td><td>${tanggal}</td><td>${waktu}</td>
+      <td>${r.temperature==null?"--":Number(r.temperature).toFixed(1)}</td>
+      <td>${r.mq2==null?"--":Number(r.mq2).toFixed(1)}</td>
+      <td>${r.mq7==null?"--":Number(r.mq7).toFixed(1)}</td>
+      <td>${r.api ? "API" : "AMAN"}</td>`;
+    logTable.appendChild(tr);
+  }
+
+  if (all.length === 0) return;
+  const last = all[all.length-1];
+  updateUIFromEntry(last);
+}
+
 function updateUIFromEntry(entry) {
   const suhu = entry.temperature ?? 0;
   const mq2  = entry.mq2 ?? 0;
@@ -93,14 +106,11 @@ function updateUIFromEntry(entry) {
   if(api) notifyFire();
 
   const now = new Date().toLocaleTimeString("id-ID");
-
-  // push to charts (limit length)
   function pushToChart(chart, value) {
     chart.data.labels.push(now);
     chart.data.datasets[0].data.push(Number(value));
     if (chart.data.labels.length > 60) {
-      chart.data.labels.shift();
-      chart.data.datasets[0].data.shift();
+      chart.data.labels.shift(); chart.data.datasets[0].data.shift();
     }
     chart.update();
   }
@@ -108,61 +118,54 @@ function updateUIFromEntry(entry) {
   pushToChart(mq2Chart, mq2);
   pushToChart(mq7Chart, mq7);
 
-  // history for insight
-  history.suhu.push(Number(suhu));
-  history.mq2.push(Number(mq2));
-  history.mq7.push(Number(mq7));
-  if (history.suhu.length>10) history.suhu.shift();
-  if (history.mq2.length>10) history.mq2.shift();
-  if (history.mq7.length>10) history.mq7.shift();
+  history.suhu.push(Number(suhu)); if(history.suhu.length>10) history.suhu.shift();
+  history.mq2.push(Number(mq2));   if(history.mq2.length>10) history.mq2.shift();
+  history.mq7.push(Number(mq7));   if(history.mq7.length>10) history.mq7.shift();
 
   document.getElementById("insight-temp").textContent = "Insight suhu: " + genInsight(history.suhu,"Suhu",40);
   document.getElementById("insight-mq2").textContent  = "Insight MQ2: "  + genInsight(history.mq2,"Gas MQ2",300);
   document.getElementById("insight-mq7").textContent  = "Insight MQ7: "  + genInsight(history.mq7,"Gas MQ7",100);
 }
 
-// main listener: listen to /readings (adjust if your device writes to different node)
-onValue(ref(db, "/readings"), snap => {
+// process snapshot from any node, identifier used to prevent duplicate keys
+function processSnapshot(snap, nodeKey) {
   const val = snap.val();
-  const rows = [];
-  // case 1: snap is object of push children
-  if (val && typeof val === 'object') {
-    // detect if this object is a single record or map of records
-    const possibleRecords = Object.entries(val).map(([k,v]) => {
-      if (v && typeof v === 'object' && (v.temperature || v.Suhu || v.MQ2 || v.MQ7 || v.ts)) {
-        return normalizeRecord(v, v.ts ?? Date.now());
-      }
-      return null;
-    }).filter(x=>x!==null);
-
-    if (possibleRecords.length>0) {
-      // sort by timestamp
-      possibleRecords.sort((a,b)=>Number(a.ts)-Number(b.ts));
-      possibleRecords.forEach(r=> rows.push(r));
-    } else {
-      // maybe val itself is a single record with direct fields
-      rows.push(normalizeRecord(val, Date.now()));
+  if (!val) return;
+  // case: push-list (object of children)
+  if (typeof val === "object" && Object.values(val).some(v => typeof v === "object" && (v.ts || v.temperature || v.Suhu || v.MQ2))) {
+    for (const [k, v] of Object.entries(val)) {
+      const rec = normalizeRecord(v, Date.now());
+      addOrUpdateEntry(`${nodeKey}_${k}`, rec);
     }
+  } else {
+    // single-record object
+    const rec = normalizeRecord(val, Date.now());
+    // use timestamp + nodeKey for uniqueness
+    addOrUpdateEntry(`${nodeKey}_${rec.ts}`, rec);
   }
+  rebuildUI();
+}
 
-  // rebuild table from rows
-  logTable.innerHTML = "";
-  rows.forEach(r => {
-    logTable.insertAdjacentHTML("beforeend", makeRow(r));
-  });
-
-  // update UI from last row if exists
-  if (rows.length>0) updateUIFromEntry(rows[rows.length-1]);
+// attach listeners to both nodes commonly used
+onValue(ref(db, "/readings"), snap => {
+  try { processSnapshot(snap, "readings"); }
+  catch(e){ console.error("readings handler error:", e); }
+});
+onValue(ref(db, "/SiBAKAR"), snap => {
+  try { processSnapshot(snap, "SiBAKAR"); }
+  catch(e){ console.error("SiBAKAR handler error:", e); }
 });
 
-// Export Excel reads table DOM
-exportBtn.addEventListener("click",()=>{
+// export button (reads table DOM)
+exportBtn.addEventListener("click", () => {
   const wb = XLSX.utils.book_new();
   const rows = [["Hari","Tanggal","Waktu","Suhu","MQ2","MQ7","Api"]];
-  document.querySelectorAll("#logTable tbody tr").forEach(tr=>{
-    rows.push(Array.from(tr.children).map(td=>td.textContent));
+  document.querySelectorAll("#logTable tbody tr").forEach(tr => {
+    rows.push(Array.from(tr.children).map(td => td.textContent));
   });
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  XLSX.utils.book_append_sheet(wb,ws,"LogSensor");
-  XLSX.writeFile(wb,"SiBAKAR_Log.xlsx");
+  XLSX.utils.book_append_sheet(wb, ws, "LogSensor");
+  XLSX.writeFile(wb, "SiBAKAR_Log.xlsx");
 });
+
+console.log("SiBAKAR app.js loaded - listeners attached for /readings and /SiBAKAR");
