@@ -1,125 +1,46 @@
-
-header {
-  position: relative;
-  padding: 120px 50px 50px; 
-  text-align: center;
-  background-color: #fff;    
-
-#logo-polindra {
-  position: absolute;
-  top: 30px;
-  left: 0px;
-  height: 80px;             
-  width: auto;
-}
-
-
-#logo-sibakar2 {
-  position: absolute;
-  top: 30px;
-  left: 100px;
-  height: 80px;            
-  width: auto;
-}
-
-#logo-elektro {
-  position: absolute;
-  top: 30px;
-  left: 200px;
-  height: 80px;             
-  width: auto;
-}
-}
-
-
-.header-content h1 {
-  margin: 0;
-  font-size: 2rem;
-}
-
-.header-content p {
-  margin: 8px 0 0;
-  font-size: 1rem;
-  color: #555;
-}
-
-* {
-  margin: 0; padding: 0; box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-  color: #ecf0f1;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; color: #ecf0f1; }
 
 body {
   background: linear-gradient(135deg, #1a1a1a 0%, #330000 70%);
-  min-height: 100vh;
-  background-attachment: fixed;
+  min-height: 100vh; background-attachment: fixed;
 }
 
+/* Banner */
 .banner {
-  display: none;
-  position: fixed; top: 0; left: 0; right: 0;
-  background: #e74c3c; color: #fff;
-  text-align: center; padding: 1rem; font-size: 1.2rem;
-  z-index: 100; animation: flash 1s infinite;
+  display: none; position: fixed; top: 0; left: 0; right: 0;
+  background: #e74c3c; color: #fff; text-align: center; padding: 1rem; font-size: 1.2rem; z-index: 100;
 }
 .banner.show { display: block; }
-@keyframes flash {
-  0%,100% { opacity:1 } 50% { opacity:0.5 }
-}
 
-
+/* Header and logos */
 header {
-  text-align: center; padding: 2rem 1rem;
-  background: rgba(0,0,0,0.4); box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  position: relative; padding: 120px 50px 50px; text-align: center; background-color: rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
-header h1 {
-  font-size: 2rem; color: #ffca28;
-  text-shadow: 0 0 8px #ff5722; margin-bottom: 0.5rem;
-}
-header p { color: #ddd; }
+#logo-polindra { position: absolute; top: 30px; left: 0px; height: 80px; width: auto; }
+#logo-sibakar2 { position: absolute; top: 30px; left: 100px; height: 80px; width: auto; }
+#logo-elektro { position: absolute; top: 30px; left: 200px; height: 80px; width: auto; }
+#logo-hima { position: absolute; top: 30px; left: 300px; height: 80px; width: auto; }
 
-.card-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 1rem; padding: 1rem;
-}
+.header-content h1 { margin: 0; font-size: 2rem; color: #ffca28; text-shadow: 0 0 8px #ff5722; margin-bottom: 0.5rem; }
+.header-content p { margin-top: 8px; color: #ddd; }
 
-
-.sensor-card {
-  background: rgba(255,255,255,0.05);
-  border-radius: 0.5rem; padding: 1rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px); text-align: center;
+/* Cards and layout */
+.card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; padding: 1rem; }
+.sensor-card { background: rgba(255,255,255,0.05); border-radius: 0.5rem; padding: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.6); backdrop-filter: blur(4px); text-align: center;
 }
-.sensor-card h3 {
-  margin-bottom: 0.5rem; color: #ffd54f;
-}
-.sensor-card .value {
-  font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;
-}
+.sensor-card h3 { margin-bottom: 0.5rem; color: #ffd54f; }
+.sensor-card .value { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; }
 .sensor-card .mini-chart { height: 60px !important; }
-.sensor-card .insight {
-  font-size: 0.85rem; color: #ccc; margin-top: 0.5rem;
-}
+.sensor-card .insight { font-size: 0.85rem; color: #ccc; margin-top: 0.5rem; }
 
 .sensor-card.api { background: rgba(255,87,34,0.2); }
-.sensor-card.api .value { color: #fff; }
 
+/* Log section */
 .log-section { padding: 1rem; }
-.log-section button {
-  padding: 0.5rem 1rem; background: #ff5722;
-  border: none; border-radius: 0.25rem;
-  color: #fff; cursor: pointer; margin-bottom: 0.5rem;
-  transition: background .3s;
-}
+.log-section button { padding: 0.5rem 1rem; background: #ff5722; border: none; border-radius: 0.25rem; color: #fff; cursor: pointer; margin-bottom: 0.5rem; transition: background .3s; }
 .log-section button:hover { background: #e64a19; }
-.log-section table {
-  width:100%; border-collapse: collapse;
-  background: rgba(0,0,0,0.4);
-}
-.log-section th, .log-section td {
-  border:1px solid #444; padding:0.5rem;
-  text-align:center;
-}
+.log-section table { width:100%; border-collapse: collapse; background: rgba(0,0,0,0.4); }
+.log-section th, .log-section td { border:1px solid #444; padding:0.5rem; text-align:center; }
 .log-section th { background: rgba(0,0,0,0.6); }

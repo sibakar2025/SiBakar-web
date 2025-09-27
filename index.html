@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>SiBAKAR — Sistem Pendeteksi dan Penanganan Kebakaran Untuk Rumah dan Industri Skala Kecil</title>
+  <title>SiBAKAR — Sistem Pendeteksi Kebakaran</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
@@ -11,17 +11,18 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 </head>
 <body>
-  <!-- banner api -->
   <div id="fireBanner" class="banner">🔥 API TERDETEKSI! 🔥</div>
 
   <header>
-    <h1>🔥 SiBAKAR</h1>
-    <p>Dashboard Monitoring Kebakaran Rumah & Industri Skala Kecil</p>
-  <img id="logo-polindra" src="file/polindra.png" alt="Logo Polindra">
-  <img id="logo-sibakar2" src="file/sibakar2.png" alt="Logo SiBAKAR">
-  <img id="logo-elektro" src="file/elektro.png" alt="Logo Elektro">
-  <div class="header-content">
-  </div>
+    <img id="logo-polindra" src="file/polindra.png" alt="Logo Polindra">
+    <img id="logo-sibakar2" src="file/sibakar2.png" alt="Logo SiBAKAR">
+    <img id="logo-elektro" src="file/elektro.png" alt="Logo Elektro">
+    <img id="logo-hima" src="file/hima.jpg" alt="Logo Hima">
+    <div class="header-content">
+      <h1>🔥 SiBAKAR</h1>
+      <p>Dashboard Monitoring Kebakaran Rumah & Industri Skala Kecil</p>
+    </div>
+  </header>
 
   <main>
     <section class="dashboard">
@@ -33,6 +34,7 @@
           <div class="value" id="temperature">-- °C</div>
           <canvas id="tempChart" class="mini-chart"></canvas>
           <div class="DATA" id="DATA-temp">DATA suhu: --</div>
+          <div class="insight" id="insight-temp"></div>
         </div>
 
         <div class="sensor-card mq2">
@@ -40,6 +42,7 @@
           <div class="value" id="mq2">-- ppm</div>
           <canvas id="mq2Chart" class="mini-chart"></canvas>
           <div class="DATA" id="DATA-mq2">DATA MQ2: --</div>
+          <div class="insight" id="insight-mq2"></div>
         </div>
 
         <div class="sensor-card mq7">
@@ -47,6 +50,7 @@
           <div class="value" id="mq7">-- ppm</div>
           <canvas id="mq7Chart" class="mini-chart"></canvas>
           <div class="DATA" id="DATA-mq7">DATA MQ7: --</div>
+          <div class="insight" id="insight-mq7"></div>
         </div>
 
         <div class="sensor-card api">
