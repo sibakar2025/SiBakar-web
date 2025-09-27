@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>SiBAKAR — Sistem Pendeteksi Kebakaran</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
+  <!-- Chart.js dan SheetJS (XLSX) sebagai global libs -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 </head>
@@ -34,7 +33,7 @@
           <div class="value" id="temperature">-- °C</div>
           <canvas id="tempChart" class="mini-chart"></canvas>
           <div class="DATA" id="DATA-temp">DATA suhu: --</div>
-          <div class="insight" id="insight-temp"></div>
+          <div class="Informasi" id="Informasi-temp"></div>
         </div>
 
         <div class="sensor-card mq2">
@@ -42,7 +41,7 @@
           <div class="value" id="mq2">-- ppm</div>
           <canvas id="mq2Chart" class="mini-chart"></canvas>
           <div class="DATA" id="DATA-mq2">DATA MQ2: --</div>
-          <div class="insight" id="insight-mq2"></div>
+          <div class="Informasi" id="Informasi-mq2"></div>
         </div>
 
         <div class="sensor-card mq7">
@@ -50,7 +49,7 @@
           <div class="value" id="mq7">-- ppm</div>
           <canvas id="mq7Chart" class="mini-chart"></canvas>
           <div class="DATA" id="DATA-mq7">DATA MQ7: --</div>
-          <div class="insight" id="insight-mq7"></div>
+          <div class="Informasi" id="Informasi-mq7"></div>
         </div>
 
         <div class="sensor-card api">
@@ -61,7 +60,7 @@
 
       <div class="log-section">
         <h3>📋 Log & Export</h3>
-        <button id="exportBtn">Export ke Excel</button>
+        <button id="exportBtn">Export Semua ke Excel</button>
         <table id="logTable">
           <thead>
             <tr>
@@ -72,6 +71,26 @@
           <tbody></tbody>
         </table>
       </div>
+
+      <hr />
+
+      <div class="report-section">
+        <h3>📈 Laporan Otomatis (setiap 3 detik)</h3>
+        <div>
+          <button id="downloadReportBtn">Download Laporan Otomatis (Excel)</button>
+          <button id="clearReportBtn">Bersihkan Laporan Otomatis</button>
+        </div>
+        <table id="reportTable">
+          <thead>
+            <tr>
+              <th>No</th><th>Waktu</th><th>Suhu</th><th>MQ2</th><th>MQ7</th><th>Api</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="reportStatus">Laporan otomatis belum berjalan.</div>
+      </div>
+
     </section>
   </main>
 
