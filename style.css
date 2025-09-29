@@ -17,10 +17,10 @@ header {
   position: relative; padding: 120px 50px 50px; text-align: center; background-color: rgba(0,0,0,0.4);
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
-#logo-polindra { position: absolute; top: 30px; left: 0px; height: 80px; width: auto; }
-#logo-sibakar2 { position: absolute; top: 30px; left: 100px; height: 80px; width: auto; }
-#logo-elektro { position: absolute; top: 30px; left: 200px; height: 80px; width: auto; }
-#logo-hima { position: absolute; top: 30px; left: 300px; height: 80px; width: auto; }
+#logo-polindra { position: absolute; top: 30px; left: 100px; height: 80px; width: auto; }
+#logo-sibakar2 { position: absolute; top: 30px; left: 300px; height: 80px; width: auto; }
+#logo-elektro { position: absolute; top: 30px; left: 0px; height: 80px; width: auto; }
+#logo-hima { position: absolute; top: 30px; left: 200px; height: 80px; width: auto; }
 
 .header-content h1 { margin: 0; font-size: 2rem; color: #ffca28; text-shadow: 0 0 8px #ff5722; margin-bottom: 0.5rem; }
 .header-content p { margin-top: 8px; color: #ddd; }
